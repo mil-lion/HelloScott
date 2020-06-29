@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--
+File:    index.html
+Project: HelloREST
+Date:    28 июн. 2020 г. 11:14:37
+Author:  Igor Morenko <morenko@lionsoft.ru>
+ 
+Copyright 2005-2020 LionSoft LLC. All rights reserved.
+-->
+<html>
+    <head>
+        <title>Hello Scott WS-RS</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Hello Scott WS-RS</h1>
+        <h3>RESTful Web Services:</h3>
+        <ul>
+            <li>
+                <b>Hello</b>
+                <ul>
+                    <li>Greeting: <a href="api/greeting?name=Igor">http://localhost:8888/scott/api/greeting?name=Igor</a></li>
+                </ul>
+            </li>
+            <li>
+                <b>Departments</b>
+                <ul>
+                    <li>All Departments: <a href="api/depts">http://localhost:8888/scott/api/depts</a></li>
+                    <li>Count of Departments: <a href="api/depts/count">http://localhost:8888/scott/api/depts/count</a></li>
+                    <li>Department of Dept=10: <a href="api/depts/10">http://localhost:8888/scott/api/depts/10</a></li>
+                    <li>Employees of Dept=10: <a href="api/depts/10/emps">http://localhost:8888/scott/api/depts/10/emps</a></li>
+                </ul>
+            </li>
+            <li>
+                <b>Employees</b>
+                <ul>
+                    <li>All Employees: <a href="api/emps">http://localhost:8888/scott/api/emps</a></li>
+                    <li>Count of Employees: <a href="api/emps/count">http://localhost:8888/scott/api/emps/count</a></li>
+                    <li>Employee of Empno=7369: <a href="api/emps/7369">http://localhost:8888/scott/api/emps/7369</a></li>
+                </ul>
+            </li>
+        </ul>
+        <h3>BASIC Athentification:</h3>
+        <ul>
+            <li>Auth: <b>scott/tiger</b></li>
+        </ul>
+    </body>
+</html>
