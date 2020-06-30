@@ -19,7 +19,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- *
+ * Сущность БД - Сотрудник
+ * 
  * @author Igor Morenko
  */
 @Entity
@@ -28,30 +29,58 @@ public class Employee implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    // ******************* Fields ********************
+
+    /**
+     * Табельный номер
+     */
     @Id
     @Column(precision = 4, nullable = false)
     private Integer empno;
     
+    /**
+     * Имя сотрудника
+     */
     @Column(length = 10)
     private String ename;
     
+    /**
+     * Должность
+     */
     @Column(length = 9)
     private String job;
     
+    /**
+     * Табельный номер руководителя
+     */
     @Column(precision = 4)
     private Integer mgr;
     
+    /**
+     * Дата приема на работу
+     */
     @Temporal(TemporalType.DATE)
     private Date hiredate;
     
+    /**
+     * Зарплата
+     */
     @Column(precision = 7, scale = 2)
     private Double sal;
     
+    /**
+     * Комиссионные
+     */
     @Column(precision = 7, scale = 2)
     private Double comm;
     
+    /**
+     * Номер отдела
+     */
     @Column(precision = 2)
     private Integer deptno;
+
+    // ******************* Constructors ********************
 
     public Employee() {
     }
@@ -59,6 +88,8 @@ public class Employee implements Serializable {
     public Employee(Integer empno) {
         this.empno = empno;
     }
+
+    // ******************* Getters & Setters ********************
 
     public Integer getEmpno() {
         return empno;
@@ -124,6 +155,8 @@ public class Employee implements Serializable {
         this.deptno = deptno;
     }
 
+    // ******************* Equals & HashCode ********************
+
     @Override
     public int hashCode() {
         int hash = 5;
@@ -148,6 +181,8 @@ public class Employee implements Serializable {
         }
         return true;
     }
+
+    // ******************* Cast to String ********************
 
     @Override
     public String toString() {

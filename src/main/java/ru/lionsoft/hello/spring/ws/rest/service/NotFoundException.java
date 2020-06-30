@@ -12,7 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- *
+ * Класс исключительной ситуации - Данные не найдены.
+ * Связан с HTTP статусом 404 - NOT FOUND
+ * 
  * @author Igor Morenko
  */
 @ResponseStatus(HttpStatus.NOT_FOUND)

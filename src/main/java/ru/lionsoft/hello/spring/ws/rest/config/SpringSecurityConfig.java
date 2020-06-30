@@ -16,12 +16,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 /**
  * Spring Security configuration setup
+ * 
  * @author Igor Morenko
  */
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    // Настройка базовой аутентификации и авторизация сервисов API
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.httpBasic() // Use Basic Authentication 
@@ -31,6 +33,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAnyRole("ADMIN", "USER"); 
     }
 
+    // Настройка встроенного провайдера аутентификации
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         // Built-in authentication provider

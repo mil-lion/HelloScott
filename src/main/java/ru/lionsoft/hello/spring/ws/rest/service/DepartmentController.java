@@ -26,6 +26,7 @@ import ru.lionsoft.hello.spring.ws.rest.model.repository.DepartmentRepository;
 import ru.lionsoft.hello.spring.ws.rest.model.repository.EmployeeRepository;
 
 /**
+ * Контроллер сервиса по работе с сущностью Отдел {@code Department}
  *
  * @author Igor Morenko
  */
@@ -33,37 +34,74 @@ import ru.lionsoft.hello.spring.ws.rest.model.repository.EmployeeRepository;
 @RequestMapping("/api/depts")
 public class DepartmentController {
     
+    /**
+     * Репозитарий отделов
+     */
     @Autowired
     private DepartmentRepository repository;
     
+    /**
+     * Репозитарий сотрудников
+     */
     @Autowired
     private EmployeeRepository empRepository;
     
+    /**
+     * Сервис поиска всех отделов. HTTP метод {@code GET}
+     * @return список всех отделов
+     */
     @GetMapping
     public List<Department> findAll() {
         return repository.findAll();
     }
     
-    @GetMapping("/{id}")
-    public Department find(@PathVariable("id") Integer id) throws NotFoundException {
-        return repository.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("Department with deptno=%d not found", id)));
+    /**
+     * Сервис поиска отдела по номеру отдела. HTTP метод {@code GET}
+     * @param deptno номер отдела
+     * @return информация об отделе
+     * @throws NotFoundException если отдел не найден
+     */
+    @GetMapping("/{deptno}")
+    public Department find(@PathVariable("deptno") Integer deptno) throws NotFoundException {
+        return repository.findById(deptno)
+                .orElseThrow(() -> new NotFoundException(String.format("Department with deptno=%d not found", deptno)));
     }
     
-    @GetMapping("/{id}/emps")
-    public List<Employee> findEmployees(@PathVariable("id") Integer id) {
-        return empRepository.findByDeptno(id);
+    /**
+     * Сервис поиска сотрудников по номеру отдела. HTTP метод {@code GET}
+     * @param deptno номер отдела
+     * @return список сотрудников отдела
+     */
+    @GetMapping("/{deptno}/emps")
+    public List<Employee> findEmployees(@PathVariable("deptno") Integer deptno) {
+        return empRepository.findByDeptno(deptno);
     }
     
+    /**
+     * Сервис добавления нового отдела. HTTP метод {@code POST}
+     * @param entity информация о новом отделе
+     * @return новый отдел
+     */
     @PostMapping
     public Department create(@Validated @RequestBody Department entity) {
         return repository.save(entity);
     }
     
-    @PutMapping("/{id}")
-    public Department update (@PathVariable("id") Integer id, @Validated @RequestBody Department entity) throws NotFoundException {
-        Department department = repository.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("Department with deptno=%d not found", id)));
+    /**
+     * Сервис изменени яинформации об отделе. HTTP метод {@code PUT}
+     * @param deptno номер отдела
+     * @param entity новая инфориация об отделе
+     * @return измененный отдел
+     * @throws NotFoundException если отдел не найден 
+     */
+    @PutMapping("/{deptno}")
+    public Department update (
+            @PathVariable("deptno") Integer deptno, 
+            @Validated @RequestBody Department entity
+    ) throws NotFoundException {
+        
+        Department department = repository.findById(deptno)
+                .orElseThrow(() -> new NotFoundException(String.format("Department with deptno=%d not found", deptno)));
         
         department.setDname(entity.getDname());
         department.setLoc(entity.getLoc());
@@ -71,15 +109,27 @@ public class DepartmentController {
         return repository.save(department);
     }
     
-    @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable("id") Integer id) throws NotFoundException {
-        Department department = repository.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("Department with deptno=%d not found", id)));
+    /**
+     * Сервис удаления отдела. HTTP метод {@code DELETE}
+     * @param deptno номер отдела
+     * @return удаленный отдел
+     * @throws NotFoundException если отдел не найден 
+     */
+    @DeleteMapping("/{deptno}")
+    public ResponseEntity delete(@PathVariable("deptno") Integer deptno)
+            throws NotFoundException {
+        
+        Department department = repository.findById(deptno)
+                .orElseThrow(() -> new NotFoundException(String.format("Department with deptno=%d not found", deptno)));
         
         repository.delete(department);
         return ResponseEntity.ok().build();
     }
     
+    /**
+     * Сервис получения количества отделов в БД. HTTP метод {@code GET}
+     * @return количество отделов
+     */
     @GetMapping("/count")
     public String count() {
         return Long.toString(repository.count());

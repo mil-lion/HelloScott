@@ -14,11 +14,17 @@ import org.springframework.stereotype.Repository;
 import ru.lionsoft.hello.spring.ws.rest.model.entity.Employee;
 
 /**
- *
+ * Репозиторий БД для Сотрудников
+ * 
  * @author Igor Morenko
  */
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     
+    /**
+     * Поиск сотрудников по номеру отдела
+     * @param detno номер отдела
+     * @return список сотрудников в отделе
+     */
     List<Employee> findByDeptno(Integer detno);
 }

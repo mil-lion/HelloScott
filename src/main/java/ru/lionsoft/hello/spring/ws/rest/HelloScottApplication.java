@@ -11,9 +11,18 @@ package ru.lionsoft.hello.spring.ws.rest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * Главный класс приложения (для запуска)
+ * 
+ * @author Igor Morenko
+ */
 @SpringBootApplication
 public class HelloScottApplication {
 
+    /**
+     * Главный метод приложения
+     * @param args аргументы командной строки
+     */
     public static void main(String[] args) {
         SpringApplication.run(HelloScottApplication.class, args);
     }

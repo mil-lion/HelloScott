@@ -13,7 +13,8 @@ import org.springframework.stereotype.Repository;
 import ru.lionsoft.hello.spring.ws.rest.model.entity.Department;
 
 /**
- *
+ * Репозиторий БД для Отделов
+ * 
  * @author Igor Morenko
  */
 @Repository

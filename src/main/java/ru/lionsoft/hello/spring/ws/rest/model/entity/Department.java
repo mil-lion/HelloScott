@@ -16,7 +16,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- *
+ * Сущность БД - Отдел
+ * 
  * @author Igor Morenko
  */
 @Entity
@@ -25,15 +26,28 @@ public class Department implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    // ******************* Fields ********************
+
+    /**
+     * Номер отдела
+     */
     @Id
     @Column(precision = 2, nullable = false)
     private Integer deptno;
     
+    /**
+     * Имя отдела
+     */
     @Column(length = 14)
     private String dname;
     
+    /**
+     * Расположение отдела (адрес)
+     */
     @Column(length = 13)
     private String loc;
+
+    // ******************* Constructors ********************
 
     public Department() {
     }
@@ -41,6 +55,8 @@ public class Department implements Serializable {
     public Department(Integer deptno) {
         this.deptno = deptno;
     }
+
+    // ******************* Getters & Setters ********************
 
     public Integer getDeptno() {
         return deptno;
@@ -66,6 +82,8 @@ public class Department implements Serializable {
         this.loc = loc;
     }
 
+    // ******************* Equals & HashCode ********************
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -90,6 +108,8 @@ public class Department implements Serializable {
         }
         return true;
     }
+
+    // ******************* Cast to String ********************
 
     @Override
     public String toString() {
