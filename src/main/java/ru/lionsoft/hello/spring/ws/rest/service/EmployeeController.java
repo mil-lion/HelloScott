@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.lionsoft.hello.spring.ws.rest.model.entity.Employee;
 import ru.lionsoft.hello.spring.ws.rest.model.repository.EmployeeRepository;
@@ -24,28 +25,29 @@ import ru.lionsoft.hello.spring.ws.rest.model.repository.EmployeeRepository;
  * @author Igor Morenko
  */
 @RestController
+@RequestMapping("/api/emps")
 public class EmployeeController {
     
     @Autowired
     private EmployeeRepository repository;
     
-    @GetMapping("/api/emps")
+    @GetMapping
     public List<Employee> findAll() {
         return repository.findAll();
     }
     
-    @GetMapping("/api/emps/{id}")
+    @GetMapping("/{id}")
     public Employee find(@PathVariable("id") Integer id) throws NotFoundException {
         return repository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("Employee with empno=%d not found", id)));
     }
     
-    @PostMapping("/api/emps")
+    @PostMapping
     public Employee create(@Validated @RequestBody Employee entity) {
         return repository.save(entity);
     }
     
-    @PutMapping("/api/emps/{id}")
+    @PutMapping("/{id}")
     public Employee update (@PathVariable("id") Integer id, @Validated @RequestBody Employee entity) throws NotFoundException {
         Employee employee = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("Employee with empno=%d not found", id)));
@@ -61,7 +63,7 @@ public class EmployeeController {
         return repository.save(employee);
     }
     
-    @DeleteMapping("/api/emps/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable("id") Integer id) throws NotFoundException {
         Employee department = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("Employee with empno=%d not found", id)));
@@ -70,7 +72,7 @@ public class EmployeeController {
         return ResponseEntity.ok().build();
     }
     
-    @GetMapping("/api/emps/count")
+    @GetMapping("/count")
     public String count() {
         return Long.toString(repository.count());
     }
