@@ -1,7 +1,10 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * File:    GreetingController.java
+ * Project: HelloScott
+ * Date:    29 июн. 2020 г. 22:39:26
+ * Author:  Igor Morenko
+ * 
+ * Copyright 2005-2020 LionSoft LLC. All rights reserved.
  */
 package ru.lionsoft.hello.spring.ws.rest.service;
 

@@ -1,10 +1,10 @@
 /*
- * This code is sample code, provided as-is, and we make no
- * warranties as to its correctness or suitability for
- * any purpose.
- *
- * We hope that it's useful to you.  Enjoy.
- * Copyright 2005-2020 LionSoft LLC.
+ * File:    SpringSecurityConfig.java
+ * Project: HelloScott
+ * Date:    29 июн. 2020 г. 22:39:26
+ * Author:  Igor Morenko
+ * 
+ * Copyright 2005-2020 LionSoft LLC. All rights reserved.
  */
 package ru.lionsoft.hello.spring.ws.rest.config;
 
