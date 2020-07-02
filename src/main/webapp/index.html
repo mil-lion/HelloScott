@@ -20,24 +20,30 @@ Copyright 2005-2020 LionSoft LLC. All rights reserved.
             <li>
                 <b>Hello</b>
                 <ul>
-                    <li>Greeting: <a href="api/greeting?name=Igor">http://localhost:8888/scott/api/greeting?name=Igor</a></li>
+                    <li>Greeting: <a href="api/greeting?name=Igor">GET http://localhost:8888/scott/api/greeting?name=Igor</a></li>
                 </ul>
             </li>
             <li>
                 <b>Departments</b>
                 <ul>
-                    <li>All Departments: <a href="api/depts">http://localhost:8888/scott/api/depts</a></li>
-                    <li>Count of Departments: <a href="api/depts/count">http://localhost:8888/scott/api/depts/count</a></li>
-                    <li>Department of Dept=10: <a href="api/depts/10">http://localhost:8888/scott/api/depts/10</a></li>
-                    <li>Employees of Dept=10: <a href="api/depts/10/emps">http://localhost:8888/scott/api/depts/10/emps</a></li>
+                    <li>All Departments: <a href="api/depts">GET http://localhost:8888/scott/api/depts</a></li>
+                    <li>Count of Departments: <a href="api/depts/count">GET http://localhost:8888/scott/api/depts/count</a></li>
+                    <li>Department of DeptNo=10: <a href="api/depts/10">GET http://localhost:8888/scott/api/depts/10</a></li>
+                    <li>Employees of DeptNo=10: <a href="api/depts/10/emps">GET http://localhost:8888/scott/api/depts/10/emps</a></li>
+                    <li>Create Department: POST http://localhost:8888/scott/api/depts</li>
+                    <li>Update Department: PUT http://localhost:8888/scott/api/depts/{deptno}</li>
+                    <li>Delete Department: DELETE http://localhost:8888/scott/api/depts/{deptno}</li>
                 </ul>
             </li>
             <li>
                 <b>Employees</b>
                 <ul>
-                    <li>All Employees: <a href="api/emps">http://localhost:8888/scott/api/emps</a></li>
-                    <li>Count of Employees: <a href="api/emps/count">http://localhost:8888/scott/api/emps/count</a></li>
-                    <li>Employee of Empno=7369: <a href="api/emps/7369">http://localhost:8888/scott/api/emps/7369</a></li>
+                    <li>All Employees: <a href="api/emps">GET http://localhost:8888/scott/api/emps</a></li>
+                    <li>Count of Employees: <a href="api/emps/count">GET http://localhost:8888/scott/api/emps/count</a></li>
+                    <li>Employee of EmpNo=7369: <a href="api/emps/7369">GET http://localhost:8888/scott/api/emps/7369</a></li>
+                    <li>Create Employee: POST http://localhost:8888/scott/api/emps</li>
+                    <li>Update Employee: PUT http://localhost:8888/scott/api/emps/{empno}</li>
+                    <li>Delete Employee: DELETE http://localhost:8888/scott/api/emps/{empno}</li>
                 </ul>
             </li>
         </ul>
