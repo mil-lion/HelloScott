@@ -9,6 +9,8 @@
 package ru.lionsoft.hello.spring.ws.rest.service;
 
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -35,6 +37,11 @@ import ru.lionsoft.hello.spring.ws.rest.model.repository.EmployeeRepository;
 public class DepartmentController {
     
     /**
+     * Журнал
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(DepartmentController.class);
+    
+    /**
      * Репозитарий отделов
      */
     @Autowired
@@ -52,6 +59,7 @@ public class DepartmentController {
      */
     @GetMapping
     public List<Department> findAll() {
+        LOG.info("GET findAll()");
         return repository.findAll();
     }
     
@@ -63,6 +71,7 @@ public class DepartmentController {
      */
     @GetMapping("/{deptno}")
     public Department find(@PathVariable("deptno") Integer deptno) throws NotFoundException {
+        LOG.info("GET find(deptno={})", deptno);
         return repository.findById(deptno)
                 .orElseThrow(() -> new NotFoundException(String.format("Department with deptno=%d not found", deptno)));
     }
@@ -74,6 +83,7 @@ public class DepartmentController {
      */
     @GetMapping("/{deptno}/emps")
     public List<Employee> findEmployees(@PathVariable("deptno") Integer deptno) {
+        LOG.info("GET findEmployees(deptno={})", deptno);
         return empRepository.findByDeptno(deptno);
     }
     
@@ -84,6 +94,7 @@ public class DepartmentController {
      */
     @PostMapping
     public Department create(@Validated @RequestBody Department entity) {
+        LOG.info("POST create(entity={})", entity.toString());
         return repository.save(entity);
     }
     
@@ -100,6 +111,7 @@ public class DepartmentController {
             @Validated @RequestBody Department entity
     ) throws NotFoundException {
         
+        LOG.info("PUT update(deptno={}, entity={})", deptno, entity.toString());
         Department department = repository.findById(deptno)
                 .orElseThrow(() -> new NotFoundException(String.format("Department with deptno=%d not found", deptno)));
         
@@ -119,6 +131,7 @@ public class DepartmentController {
     public ResponseEntity delete(@PathVariable("deptno") Integer deptno)
             throws NotFoundException {
         
+        LOG.info("DELETE delete(deptno={})", deptno);
         Department department = repository.findById(deptno)
                 .orElseThrow(() -> new NotFoundException(String.format("Department with deptno=%d not found", deptno)));
         
@@ -132,6 +145,7 @@ public class DepartmentController {
      */
     @GetMapping("/count")
     public String count() {
+        LOG.info("GET count()");
         return Long.toString(repository.count());
     }
 }

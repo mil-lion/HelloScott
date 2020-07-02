@@ -9,6 +9,8 @@
 package ru.lionsoft.hello.spring.ws.rest.service;
 
 import java.util.concurrent.atomic.AtomicLong;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +23,11 @@ import ru.lionsoft.hello.spring.ws.rest.model.Greeting;
  */
 @RestController
 public class GreetingController {
+
+    /**
+     * Журнал
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(GreetingController.class);
     
     /**
      * Шаблон приветственного сообщения
@@ -38,6 +45,8 @@ public class GreetingController {
      */
     @GetMapping("/api/greeting")
     public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
+        
+        LOG.info("GET greeting(name={})", name);
         return new Greeting(counter.incrementAndGet(), String.format(TEMPLATE, name));
     }
 }

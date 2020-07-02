@@ -9,6 +9,8 @@
 package ru.lionsoft.hello.spring.ws.rest.service;
 
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -31,7 +33,12 @@ import ru.lionsoft.hello.spring.ws.rest.model.repository.EmployeeRepository;
 @RestController
 @RequestMapping("/api/emps")
 public class EmployeeController {
-    
+
+    /**
+     * Журнал
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(EmployeeController.class);
+
     /**
      * Репозитарий сотрудников
      */
@@ -44,6 +51,7 @@ public class EmployeeController {
      */
     @GetMapping
     public List<Employee> findAll() {
+        LOG.info("GET findAll()");
         return repository.findAll();
     }
 
@@ -57,6 +65,7 @@ public class EmployeeController {
     public Employee find(@PathVariable("empno") Integer empno)
             throws NotFoundException {
         
+        LOG.info("GET find(empno={})", empno);
         return repository.findById(empno)
                 .orElseThrow(() -> new NotFoundException(String.format("Employee with empno=%d not found", empno)));
     }
@@ -68,6 +77,7 @@ public class EmployeeController {
      */
     @PostMapping
     public Employee create(@Validated @RequestBody Employee entity) {
+        LOG.info("PUT create(entity={})", entity.toString());
         return repository.save(entity);
     }
     
@@ -84,6 +94,7 @@ public class EmployeeController {
             @Validated @RequestBody Employee entity
     ) throws NotFoundException {
         
+        LOG.info("PUT update(empno={}, entity={})", empno, entity.toString());
         Employee employee = repository.findById(empno)
                 .orElseThrow(() -> new NotFoundException(String.format("Employee with empno=%d not found", empno)));
         
@@ -108,6 +119,7 @@ public class EmployeeController {
     public ResponseEntity delete(@PathVariable("empno") Integer empno) 
             throws NotFoundException {
         
+        LOG.info("DELETE delete(empno={})", empno);
         Employee department = repository.findById(empno)
                 .orElseThrow(() -> new NotFoundException(String.format("Employee with empno=%d not found", empno)));
         
@@ -121,6 +133,7 @@ public class EmployeeController {
      */
     @GetMapping("/count")
     public String count() {
+        LOG.info("GET count()");
         return Long.toString(repository.count());
     }
 }
