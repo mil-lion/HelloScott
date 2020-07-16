@@ -8,7 +8,7 @@ DROP TABLE scott.salgrade;
 -- DROP SCHEMA scott ;
 
 CREATE SCHEMA scott
-    AUTHORIZATION postgres;
+    AUTHORIZATION scott;
 
 -- Table BONUS
 CREATE TABLE scott.bonus (
