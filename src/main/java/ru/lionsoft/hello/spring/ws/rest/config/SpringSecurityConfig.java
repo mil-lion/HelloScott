@@ -30,7 +30,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
                 .authorizeRequests()
                 .antMatchers("/api/**") //.anyRequest()
-                .hasAnyRole("ADMIN", "USER"); 
+                .hasAnyRole("ADMIN", "USER")
+            .and()
+                .csrf().disable();  // disable CSRF
     }
 
     // Настройка встроенного провайдера аутентификации
