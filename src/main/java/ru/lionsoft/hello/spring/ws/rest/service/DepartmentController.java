@@ -9,11 +9,13 @@
 package ru.lionsoft.hello.spring.ws.rest.service;
 
 import java.util.List;
+import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,6 +55,9 @@ public class DepartmentController {
     @Autowired
     private EmployeeRepository empRepository;
     
+    @Autowired
+    private MapValidationErrorService errorService;
+    
     /**
      * Сервис поиска всех отделов. HTTP метод {@code GET}
      * @return список всех отделов
@@ -88,37 +93,47 @@ public class DepartmentController {
     }
     
     /**
-     * Сервис добавления нового отдела. HTTP метод {@code POST}
+     * Сервис добавления нового отдела.HTTP метод {@code POST}
      * @param entity информация о новом отделе
+     * @param result результат проверки сущности
      * @return новый отдел
      */
     @PostMapping
-    public Department create(@Validated @RequestBody Department entity) {
+    public ResponseEntity<?> create(@Valid @RequestBody Department entity, BindingResult result) {
         LOG.info("POST create(entity={})", entity.toString());
-        return repository.save(entity);
+        if (result.hasErrors()) {
+            return errorService.mapValidationService(result);
+        }
+        return new ResponseEntity<Department>(repository.save(entity), HttpStatus.OK);
     }
     
     /**
-     * Сервис изменени яинформации об отделе. HTTP метод {@code PUT}
+     * Сервис изменени яинформации об отделе.HTTP метод {@code PUT}
      * @param deptno номер отдела
      * @param entity новая инфориация об отделе
+     * @param result результат проверки сущности
      * @return измененный отдел
      * @throws NotFoundException если отдел не найден 
      */
     @PutMapping("/{deptno}")
-    public Department update (
+    public ResponseEntity<?> update (
             @PathVariable("deptno") Integer deptno, 
-            @Validated @RequestBody Department entity
+            @Valid @RequestBody Department entity,
+            BindingResult result
     ) throws NotFoundException {
         
         LOG.info("PUT update(deptno={}, entity={})", deptno, entity.toString());
+        if (result.hasErrors()) {
+            return errorService.mapValidationService(result);
+        }
+        
         Department department = repository.findById(deptno)
                 .orElseThrow(() -> new NotFoundException(String.format("Department with deptno=%d not found", deptno)));
         
         department.setDname(entity.getDname());
         department.setLoc(entity.getLoc());
         
-        return repository.save(department);
+        return new ResponseEntity<Department>(repository.save(department), HttpStatus.OK);
     }
     
     /**

@@ -9,11 +9,13 @@
 package ru.lionsoft.hello.spring.ws.rest.service;
 
 import java.util.List;
+import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,6 +47,9 @@ public class EmployeeController {
     @Autowired
     private EmployeeRepository repository;
     
+    @Autowired
+    private MapValidationErrorService errorService;
+    
     /**
      * Сервис поиска всех сотрудников. HTTP метод {@code GET}
      * @return список всех сотрудников
@@ -73,28 +78,38 @@ public class EmployeeController {
     /**
      * Сервис добавления нового сотрудника. HTTP метод {@code POST}
      * @param entity информация о новом сотруднике
+     * @param result результат проверки сущности
      * @return новый сотрудник
      */
     @PostMapping
-    public Employee create(@Validated @RequestBody Employee entity) {
+    public ResponseEntity<?> create(@Valid @RequestBody Employee entity, BindingResult result) {
         LOG.info("PUT create(entity={})", entity.toString());
-        return repository.save(entity);
+        if (result.hasErrors()) {
+            return errorService.mapValidationService(result);
+        }
+        return new ResponseEntity<Employee>(repository.save(entity), HttpStatus.OK);
     }
     
     /**
      * Сервис изменения информации о сотруднике. HTTP метод {@code PUT}
      * @param empno табельный номер сотрудника
      * @param entity новая информация о сотруднике
+     * @param result результат проверки сущности
      * @return измененный сотрудник
      * @throws NotFoundException если сотрудник не найден
      */
     @PutMapping("/{empno}")
-    public Employee update (
+    public ResponseEntity<?> update (
             @PathVariable("empno") Integer empno, 
-            @Validated @RequestBody Employee entity
+            @Valid @RequestBody Employee entity,
+            BindingResult result
     ) throws NotFoundException {
         
         LOG.info("PUT update(empno={}, entity={})", empno, entity.toString());
+        if (result.hasErrors()) {
+            return errorService.mapValidationService(result);
+        }
+        
         Employee employee = repository.findById(empno)
                 .orElseThrow(() -> new NotFoundException(String.format("Employee with empno=%d not found", empno)));
         
@@ -106,7 +121,7 @@ public class EmployeeController {
         employee.setComm(entity.getComm());
         employee.setDeptno(entity.getDeptno());
         
-        return repository.save(employee);
+        return new ResponseEntity<Employee>(repository.save(employee), HttpStatus.OK);
     }
     
     /**

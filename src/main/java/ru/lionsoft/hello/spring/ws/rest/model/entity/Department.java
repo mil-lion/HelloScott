@@ -14,6 +14,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Сущность БД - Отдел
@@ -33,18 +38,24 @@ public class Department implements Serializable {
      */
     @Id
     @Column(precision = 2, nullable = false)
+    @NotNull(message = "Department number is required")
+    @Min(value = 0, message = "Please use positive value")
+    @Max(value = 99, message = "Please use 4 digital")
     private Integer deptno;
     
     /**
      * Имя отдела
      */
     @Column(length = 14)
+    @NotBlank(message = "Department name is required")
+    @Size(max = 14, message = "Please use to 14 character")
     private String dname;
     
     /**
      * Расположение отдела (адрес)
      */
     @Column(length = 13)
+    @Size(max = 13, message = "Please use to 13 character")
     private String loc;
 
     // ******************* Constructors ********************
@@ -54,6 +65,12 @@ public class Department implements Serializable {
 
     public Department(Integer deptno) {
         this.deptno = deptno;
+    }
+
+    public Department(Integer deptno, String dname, String loc) {
+        this.deptno = deptno;
+        this.dname = dname;
+        this.loc = loc;
     }
 
     // ******************* Getters & Setters ********************
